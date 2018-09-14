@@ -1,6 +1,8 @@
 const express =require('express');
 const hbs=require('hbs');
 const fs= require('fs');
+
+
 var app =express();
 hbs.registerPartials(__dirname + '/views/partials')
 app.set('view engine','hbs');
@@ -16,9 +18,9 @@ fs.appendFile('server.log',log + '\n', (err) =>{
 });
    next();
 });
-app.use((req,res, next) => {
-  res.render('maintenance.hbs');
-});
+// app.use((req,res, next) => {
+//   res.render('maintenance.hbs');
+// });
 app.use(express.static(__dirname + '/public')); //Serves resources from public folder
 
 hbs.registerHelper('getCurrentYear',() =>{
@@ -46,6 +48,12 @@ app.get('/about',(req,res) =>
     pageTitle: 'About Page',
   });
 });
+app.get('/projects',(req,res) =>{
+  res.render('projects.hbs', {
+    pageTitle:'Projects'
+  });
+});
+
 app.get('/bad',(req,res) =>{
   res.send( {
     errorMessage: 'unable to handle '
